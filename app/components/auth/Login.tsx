@@ -4,6 +4,12 @@ import Image from "next/image";
 import { useState } from "react";
 import { z } from "zod";
 import signupSvg from "../../../public/undraw_online-ad_t56y.svg"; // you can keep same image or replace if needed
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useAtom } from "jotai";
+import { currentUserAtom, loginAtom } from "@/store/authslice";
+import Link from "next/link";
 
 // Login Schema
 const loginSchema = z.object({
@@ -14,6 +20,9 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Login() {
+  const [login, setLogin] = useAtom(loginAtom);
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
+  const router = useRouter();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -26,7 +35,7 @@ export default function Login() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const result = loginSchema.safeParse(formData);
@@ -41,7 +50,17 @@ export default function Login() {
     } else {
       console.log("Validated Data:", result.data);
       setErrors({});
-      // You can continue with login API call here
+      try {
+        const res = await axios.post("/api/login", result.data);
+        console.log(res.data);
+        toast.success("Logged In Successfully!!!");
+        setLogin(true);
+        setCurrentUser(res.data.user);
+        router.push("/");
+      } catch (err) {
+        console.log(err);
+        toast.error("Invalid Email or Password");
+      }
     }
   };
 
@@ -60,7 +79,7 @@ export default function Login() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="border rounded w-full p-2"
+            className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email}</p>
@@ -74,7 +93,7 @@ export default function Login() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="border rounded w-full p-2"
+            className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
           />
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password}</p>
@@ -88,6 +107,14 @@ export default function Login() {
           Login
         </button>
       </form>
+      <div className="mt-4 text-sm text-gray-600 text-center">
+        <p>
+          Have no account?{" "}
+          <Link href="/signup" className="text-black hover:underline">
+            Sign Up here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

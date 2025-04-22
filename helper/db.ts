@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
-export async function connectDB(){
-    try{
-        await mongoose.connect("mongodb+srv://debojjoti550:shovon1560@cluster0.oqkez.mongodb.net/workManager");
+export async function connectDB() {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://debojjoti550:shovon1560@cluster0.oqkez.mongodb.net/CRM"
+    );
 
-        console.log("Connected to Database.")
-    }
-    catch(err){
-        console.log(err);
-    }
+    console.log("Connected to Database.");
+  } catch (err) {
+    console.log(err);
+  }
 }

@@ -1,32 +1,43 @@
+"use client";
+import { currentUserAtom, loginAtom } from "@/store/authslice";
+import { useAtom } from "jotai";
 import Link from "next/link";
 // import { Button } from "@/components/ui/button";
 // import { ModeToggle } from "@/components/mode-toggle";
 
 export function LandingPage() {
+  const [login] = useAtom(loginAtom);
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
+
+  console.log(currentUser);
   return (
     <div>
       <section className="container grid items-center gap-6 ">
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            Manage your freelance business with ease
+            {!login
+              ? "Manage your freelance business with ease"
+              : "Welcome Back"}
           </h1>
           <p className="md:text-xl">
             Keep track of clients, projects, and interactions all in one place.
             FreelanceCRM helps you stay organized and focused on what matters
             most.
           </p>
-          <div className="flex gap-4">
-            <Link href="/signup">
-              <button className="bg-[#6c63ff] px-2 text-white rounded-md py-2 font-semibold hover:bg-[#5a54e0] transition duration-200 cursor-pointer">
-                Get Started
-              </button>
-            </Link>
-            <Link href="/login">
-              <button className="bg-gray-400 px-2 text-white rounded-md py-2 font-semibold hover:bg-gray-500 transition duration-200 cursor-pointer">
-                Login
-              </button>
-            </Link>
-          </div>
+          {!login && (
+            <div className="flex gap-4">
+              <Link href="/signup">
+                <button className="bg-[#6c63ff] px-2 text-white rounded-md py-2 font-semibold hover:bg-[#5a54e0] transition duration-200 cursor-pointer">
+                  Get Started
+                </button>
+              </Link>
+              <Link href="/login">
+                <button className="bg-gray-400 px-2 text-white rounded-md py-2 font-semibold hover:bg-gray-500 transition duration-200 cursor-pointer">
+                  Login
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
         {/* <div className="flex justify-center">
             <div className="relative h-[350px] w-[350px] rounded-lg bg-muted p-4 shadow-lg md:h-[450px] md:w-[450px]">
