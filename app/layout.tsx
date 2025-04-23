@@ -34,7 +34,7 @@ export default function RootLayout({
         <ToastProvider />
         <AuthInitializer />
         <Navbar />
-        <main className="w-[90%] mx-auto pt-22 mb-5 flex-1">{children}</main>
+        <main className="w-[90%] mx-auto pt-26 md:pt-22 mb-5 flex-1">{children}</main>
         <Footer />
       </body>
     </html>

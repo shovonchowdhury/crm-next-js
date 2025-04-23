@@ -20,10 +20,10 @@ export default function Navbar() {
   };
 
   const isActive = (path:string) =>
-    pathname === path ? "bg-white text-black" : "hover:text-gray-300";
+    pathname === path ? "bg-white text-black" : "hover:text-gray-300 bg-[#443ebd] md:bg-[#6c63ff]";
 
   return (
-    <div className="fixed top-0 left-0 w-full text-white bg-[#6c63ff] z-50">
+    <div className="fixed top-0 left-0 w-full text-white  bg-[#6c63ff] z-50">
       <div className="">
         <div className="w-[90%] mx-auto">
           <div className="flex h-12 md:h-16 items-center justify-between">

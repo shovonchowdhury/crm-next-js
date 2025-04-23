@@ -208,7 +208,7 @@ export default function Signup() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password
+                Confirm Password
               </label>
               <input
                 type="password"
