@@ -35,7 +35,10 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "User is logged in", user:{email:user.email, username: user.username} },
+      {
+        message: "User is logged in",
+        user: { email: user.email, username: user.username },
+      },
       { status: 200 }
     );
   } catch (error) {

@@ -83,8 +83,6 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     }
-    // console.log(typeof userId);
-    // console.log({ ...parsedData, userId });
 
     const newClient = new Client({
       ...parsedData,
